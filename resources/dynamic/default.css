@@ -1,0 +1,142 @@
+.adc-default ul,
+.adc-default li
+{
+    margin  : 0;
+    padding : 0;
+}
+html {
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+}
+
+body {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.adc-imageHotspot svg {
+    display: block;
+}
+
+.adc-imageHotspot {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow:visible;
+}
+
+.adc-imageHotspot .popupDisplayed {
+    display: none;
+}
+
+.adc-imageHotspot svg {
+    width: 100%;
+    max-width: 100%;
+}
+
+.adc-imageHotspot .container {
+    z-index: 10;
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    max-width: 100%;
+}
+
+.adc-imageHotspot img {
+    max-width: 100%;
+    height: auto;
+    z-index: 1;
+}
+
+/* general style of the buttons */
+
+.adc-imageHotspot button {
+    margin: 5px 5px 5px 5px;
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    border-style: solid;
+    border-color: #555;
+    background-color: #555;
+    background-repeat: no-repeat; 
+}
+
+
+/* The actual popup (appears on top) */
+
+.adc-imageHotspot .popuptext {
+    visibility: hidden;
+    color: #fff;
+    background-color: #555;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 5px 5px 5px;
+    position: absolute;
+    z-index: 12;
+    cursor: default;
+    
+}
+
+
+/* Popup arrow */
+
+.adc-imageHotspot .popuptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+
+/* show the popup */
+
+.adc-imageHotspot .show {
+    visibility: visible;
+    /*-webkit-animation: fadeIn 0.5s;
+    animation: fadeIn 0.5s*/
+}
+
+
+/* Add animation (fade in the popup) */
+
+@-webkit-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.adc-imageHotspot .like {
+    background-image: url("{%= CurrentADC.URLTo("static/flat-smiley-adc-happy-plus.png") %}");
+    
+}
+    
+.adc-imageHotspot .dislike {
+    background-image: url("{%= CurrentADC.URLTo("static/flat-smiley-adc-unhappy-plus.png") %}");
+}
+    
+.adc-imageHotspot .neutral {
+    background-image: url("{%= CurrentADC.URLTo("static/flat-smiley-adc-medium.png") %}");
+}
+    
+.adc-imageHotspot .remove {
+    background-image: url("{%= CurrentADC.URLTo("static/bin.png") %}");
+}
+
+.adc-imageHotspot path.unselected {
+	display:none
+}

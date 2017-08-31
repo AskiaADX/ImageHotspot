@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<control  xmlns="http://www.askia.com/2.1.0/ADCSchema"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://www.askia.com/2.1.0/ADCSchema https://raw.githubusercontent.com/AskiaADX/ADXSchema/2.1.0/ADCSchema.xsd"
+          version="2.1.0"
+          askiaCompat="5.4.2">
+  <info>
+    <name>adc2-imageHotspot</name>
+    <guid>4022e85e-485e-4f54-bc38-7c7db8dc012c</guid>
+    <version>1.0.0</version>
+    <date>2017-05-23</date>
+    <description><![CDATA[]]></description>
+    <company></company>
+    <author><![CDATA[]]></author>
+    <site></site>
+    <helpURL></helpURL>
+    <categories>
+      <category>General</category>
+    </categories>
+    <constraints>
+      <constraint on="questions" chapter="false" single="true" multiple="false" numeric="false" date="false" open="false" requireParentLoop="true" />
+      <constraint on="controls" responseblock="true" label="false" textbox="false" checkbox="false" listbox="false" radiobutton="false" />
+      <constraint on="responses" max="*" min="*" />
+    </constraints>
+  </info>
+  <outputs defaultOutput="default">
+    <output id="default">
+      <description><![CDATA[Default output]]></description>
+      <content fileName="default.html" type="html" mode="dynamic" position="placeholder" />
+      <content fileName="default.css" type="css" mode="dynamic" position="head" />
+      <content fileName="raphael.min.js" type="javascript" mode="static" position="head" />
+      <content fileName="hotspot.js" type="javascript" mode="dynamic" position="foot" />
+      <content fileName="default.js" type="javascript" mode="dynamic" position="foot" />
+      <content fileName="flat-smiley-adc-happy-plus.png" type="image" mode="static" position="none" />
+      <content fileName="flat-smiley-adc-medium.png" type="image" mode="static" position="none" />
+      <content fileName="flat-smiley-adc-unhappy-plus.png" type="image" mode="static" position="none" />
+      <content fileName="bin.png" type="image" mode="static" position="none" />
+    </output>
+  </outputs>
+  <properties>
+    <category id="general" name="General">
+      <property xsi:type="standardProperty" id="imageURL" name="Image URL" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="imageHeight" name="Image height" type="number" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[Image height in pixels]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="imageWidth" name="Image width" type="number" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[Image width (pixels)]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="numOptions" name="Number of Options" type="number" mode="dynamic" require="false" visible="false" min="1" max="3">
+        <description><![CDATA[Number of options]]></description>
+        <value><![CDATA[{% CurrentQuestion.Iteration(1).AvailableResponses.Count %}]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="likeOpt" name="Like Option" type="string" require="false" visible="true">
+        <description><![CDATA[]]></description>
+        <value><![CDATA[1]]></value>
+        <options>
+          <option value="1" text="Like" />
+          <option value="0" text="Dislike" />
+        </options>
+      </property>
+    </category>
+    <category id="colours" name="Colours">
+      <property xsi:type="standardProperty" id="hoverColor" name="Hover colour" type="color" mode="static" require="false" visible="true" colorFormat="rgb">
+        <description><![CDATA[Colour of the area(s) when hovered upon]]></description>
+        <value><![CDATA[251,255,207]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="likeColor" name="Positive Colour" type="color" mode="static" require="false" visible="true" colorFormat="rgb">
+        <description><![CDATA[Colour of the area(s) when selected positively]]></description>
+        <value><![CDATA[144,238,144]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="neutralColor" name="Neutral Color" type="color" mode="static" require="false" visible="true" colorFormat="rgb">
+        <description><![CDATA[Colour of the area(s) when selected neutrally]]></description>
+        <value><![CDATA[173,216,230]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="dislikeColor" name="Negative Color" type="color" mode="static" require="false" visible="true" colorFormat="rgb">
+        <description><![CDATA[Colour of the area(s) when selected negatively]]></description>
+        <value><![CDATA[240,128,128]]></value>
+      </property>
+    </category>
+    <category id="hotspots" name="Hotspots">
+      <property xsi:type="standardProperty" id="hotspot1" name="Hotspot Area 1" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[Coordinates for hotspot #1]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="hotspot2" name="Hotspot Area 2" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Coordinates for hotspot #2]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="hotspot3" name="Hotspot Area 3" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Coordinates for hotspot #3]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="hotspot4" name="Hotspot Area 4" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Coordinates for hotspot #4]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="hotspot5" name="Hotspot Area 5" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Coordinates for hotspot #5]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="hotspot6" name="Hotspot Area 6" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Coordinates for hotspot #6]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="hotspot7" name="Hotspot Area 7" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Coordinates for hotspot #7]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="hotspot8" name="Hotspot Area 8" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Coordinates for hotspot #8]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="hotspot9" name="Hotspot Area 9" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Coordinates for hotspot #9]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="hotspot10" name="Hotspot Area 10" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Coordinates for hotspot #10]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="hotspot11" name="Hotspot Area 11" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Coordinates for hotspot #11]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="hotspot12" name="Hotspot Area 12" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Coordinates for hotspot #12]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="hotspot13" name="Hotspot Area 13" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Coordinates for hotspot #13]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="hotspot14" name="Hotspot Area 14" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Coordinates for hotspot #14]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="hotspot15" name="Hotspot Area 15" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Coordinates for hotspot #15]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="hotspot16" name="Hotspot Area 16" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Coordinates for hotspot #16]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="hotspot17" name="Hotspot Area 17" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Coordinates for hotspot #17]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="hotspot18" name="Hotspot Area 18" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Coordinates for hotspot #18]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="hotspot19" name="Hotspot Area 19" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Coordinates for hotspot #19]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="hotspot20" name="Hotspot Area 20" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Coordinates for hotspot #20]]></description>
+        <value></value>
+      </property>
+    </category>
+  </properties>
+</control>

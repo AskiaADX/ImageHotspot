@@ -1,0 +1,31 @@
+{%
+Dim pathImg = CurrentADC.PropValue("imageURL")
+%}
+
+<div id="adc_{%= CurrentADC.InstanceId %}" class="adc-default adc-imageHotspot">
+    <img id="imgADC_{%= CurrentADC.InstanceId %}" src="{%= pathImg %}"/>
+{%
+Dim inputName
+If CurrentQuestion.Type = "single" Then
+    inputName = CurrentQuestion.InputName()
+EndIf    
+
+Dim inputValue
+Dim caption
+
+Dim i
+%}
+
+<div id="adc-container{%= CurrentADC.InstanceId %}" class="container"></div>
+{% 
+Dim inputId
+Dim attrChecked
+Dim j
+For j = 1 To CurrentQuestion.AllIterations.Count
+%}
+    <input type='hidden' name="{%= CurrentQuestion.Iteration(j).InputName() %}" id="input_{%=CurrentADC.InstanceId%}_{%= CurrentQuestion.Iteration(j).InputName() %}" value=""/>
+{% 
+Next
+%}
+
+</div>
