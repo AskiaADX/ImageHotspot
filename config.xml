@@ -163,6 +163,46 @@
         <description><![CDATA[Coordinates for hotspot #20]]></description>
         <value></value>
       </property>
+      <property xsi:type="standardProperty" id="hotspot21" name="Hotspot Area 21" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Coordinates for hotspot #21]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="hotspot22" name="Hotspot Area 22" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Coordinates for hotspot #22]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="hotspot23" name="Hotspot Area 23" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Coordinates for hotspot #23]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="hotspot24" name="Hotspot Area 24" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Coordinates for hotspot #24]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="hotspot25" name="Hotspot Area 25" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Coordinates for hotspot #25]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="hotspot26" name="Hotspot Area 26" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Coordinates for hotspot #26]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="hotspot27" name="Hotspot Area 27" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Coordinates for hotspot #27]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="hotspot28" name="Hotspot Area 28" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Coordinates for hotspot #28]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="hotspot29" name="Hotspot Area 29" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Coordinates for hotspot #29]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="hotspot30" name="Hotspot Area 30" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Coordinates for hotspot #30]]></description>
+        <value></value>
+      </property>
     </category>
   </properties>
 </control>
