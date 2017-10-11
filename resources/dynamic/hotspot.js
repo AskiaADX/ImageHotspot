@@ -303,7 +303,7 @@
      * @param {object} parameters Parameters of the ADC
      */
     function ImageHotspot(parameters) {
-        alert("ver 0.1")
+        //alert("ver 0.1")
         this.adcContainer = parameters.adcContainer;
         this.adcID = parameters.adcID;
         this.areas = parameters.areas;
