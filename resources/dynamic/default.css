@@ -1,15 +1,18 @@
 {%
 Dim controlAlign
 If (CurrentADC.PropValue("controlAlign") = "center" ) Then
-    controlAlign = "center"
+    controlAlign = "0 auto"
 ElseIf (CurrentADC.PropValue("controlAlign") = "right" ) Then
-    controlAlign = "right"
+    controlAlign = "0 0 0 auto"
 Else
-    controlAlign = "left"
+    controlAlign = "0 auto 0 0"
 EndIf
 %}
 #adc_{%= CurrentADC.InstanceId %} {
-    text-align: {%= controlAlign %};
+    text-align: {%= CurrentADC.PropValue("controlAlign") %};
+}
+#adc_{%= CurrentADC.InstanceId %} svg {
+    margin: {%= controlAlign %};
 }
 #adc_{%= CurrentADC.InstanceId %} .like {
     background-image: url("{%= CurrentADC.URLTo("static/flat-smiley-adc-happy-plus.png") %}");
