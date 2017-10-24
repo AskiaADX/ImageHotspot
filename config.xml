@@ -7,7 +7,7 @@
   <info>
     <name>ImageHotspot</name>
     <guid>4022e85e-485e-4f54-bc38-7c7db8dc012c</guid>
-    <version>2.0.0</version>
+    <version>2.0.1</version>
     <date>2017-05-23</date>
     <description><![CDATA[]]></description>
     <company></company>
@@ -40,6 +40,15 @@
   </outputs>
   <properties>
     <category id="general" name="General">
+      <property xsi:type="standardProperty" id="controlAlign" name="Control Alignment" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[The alignment of the control]]></description>
+        <value><![CDATA[center]]></value>
+        <options>
+          <option value="left" text="Left" />
+          <option value="center" text="Center" />
+          <option value="right" text="Right" />
+        </options>
+      </property>
       <property xsi:type="standardProperty" id="imageURL" name="Image URL" type="string" mode="dynamic" require="true" visible="true">
         <description><![CDATA[]]></description>
         <value></value>

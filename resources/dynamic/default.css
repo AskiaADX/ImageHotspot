@@ -1,16 +1,25 @@
+{%
+Dim controlAlign
+If (CurrentADC.PropValue("controlAlign") = "center" ) Then
+    controlAlign = "center"
+ElseIf (CurrentADC.PropValue("controlAlign") = "right" ) Then
+    controlAlign = "right"
+Else
+    controlAlign = "left"
+EndIf
+%}
+#adc_{%= CurrentADC.InstanceId %} {
+    text-align: {%= controlAlign %};
+}
 #adc_{%= CurrentADC.InstanceId %} .like {
     background-image: url("{%= CurrentADC.URLTo("static/flat-smiley-adc-happy-plus.png") %}");
-    
 }
-    
 #adc_{%= CurrentADC.InstanceId %} .dislike {
     background-image: url("{%= CurrentADC.URLTo("static/flat-smiley-adc-unhappy-plus.png") %}");
-}
-    
+}   
 #adc_{%= CurrentADC.InstanceId %} .neutral {
     background-image: url("{%= CurrentADC.URLTo("static/flat-smiley-adc-medium.png") %}");
-}
-    
+}   
 #adc_{%= CurrentADC.InstanceId %} .remove {
     background-image: url("{%= CurrentADC.URLTo("static/bin.png") %}");
 }

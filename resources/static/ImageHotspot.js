@@ -363,6 +363,7 @@
         currentQuestion = parameters.currentQuestion;
 
         var myDiv = document.getElementById(this.adcID);
+        myDiv.querySelector("img").style.maxWidth = this.imageWidth + "px";
         var imgWidth = myDiv.querySelector("img").clientWidth;
         var imgHeight = myDiv.querySelector("img").clientHeight;
 
