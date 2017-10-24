@@ -43,11 +43,11 @@
         <description><![CDATA[]]></description>
         <value></value>
       </property>
-      <property xsi:type="standardProperty" id="imageHeight" name="Image height" type="number" mode="dynamic" require="true" visible="true">
+      <property xsi:type="standardProperty" id="imageHeight" name="Image height" type="string" mode="dynamic" require="true" visible="true">
         <description><![CDATA[Image height in pixels]]></description>
         <value></value>
       </property>
-      <property xsi:type="standardProperty" id="imageWidth" name="Image width" type="number" mode="dynamic" require="true" visible="true">
+      <property xsi:type="standardProperty" id="imageWidth" name="Image width" type="string" mode="dynamic" require="true" visible="true">
         <description><![CDATA[Image width (pixels)]]></description>
         <value></value>
       </property>
