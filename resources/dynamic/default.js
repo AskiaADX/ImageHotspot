@@ -26,6 +26,6 @@ var imageHotspot = new ImageHotspot({adcContainer:"adc-container{%= CurrentADC.I
 	], 
       option: {%= option %}, 
     values:[1, 2, 3], 
-	imageWidth:{%= CurrentADC.PropValue("imageWidth")%}, 
-	imageHeight:{%= CurrentADC.PropValue("imageHeight")%}
+	imageWidth:'{%= CurrentADC.PropValue("imageWidth")%}', 
+	imageHeight:'{%= CurrentADC.PropValue("imageHeight")%}'
 });
