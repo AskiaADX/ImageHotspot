@@ -24,8 +24,14 @@ var imageHotspot = new ImageHotspot({adcContainer:"adc-container{%= CurrentADC.I
 		Next
 	%}
 	], 
-      option: {%= option %}, 
-    values:[1, 2, 3], 
+    option: {%= option %}, 
+    values:[{%= CurrentQuestion.Iteration(1).AvailableResponses[1].InputValue()%}, {%= CurrentQuestion.Iteration(1).AvailableResponses[2].InputValue()%}, {%= CurrentQuestion.Iteration(1).AvailableResponses[3].InputValue()%}], 
 	imageWidth:'{%= CurrentADC.PropValue("imageWidth")%}', 
-	imageHeight:'{%= CurrentADC.PropValue("imageHeight")%}'
+	imageHeight:'{%= CurrentADC.PropValue("imageHeight")%}',
+    hoverColor:'rgb({%= CurrentADC.PropValue("hoverColor").ToRGB() %})',
+    likeColor:'rgb({%= CurrentADC.PropValue("likeColor").ToRGB() %})',
+    neutralColor:'rgb({%= CurrentADC.PropValue("neutralColor").ToRGB() %})',
+    dislikeColor:'rgb({%= CurrentADC.PropValue("dislikeColor").ToRGB() %})',
+    numResponses:{%= CurrentQuestion.Iteration(1).AvailableResponses.Count %},
+    likeOpt:{%= CurrentADC.PropValue("likeOpt") %}
 });

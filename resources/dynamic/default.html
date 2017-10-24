@@ -23,7 +23,7 @@ Dim attrChecked
 Dim j
 For j = 1 To CurrentQuestion.AllIterations.Count
 %}
-    <input type='hidden' name="{%= CurrentQuestion.Iteration(j).InputName() %}" id="input_{%=CurrentADC.InstanceId%}_{%= CurrentQuestion.Iteration(j).InputName() %}" value=""/>
+    <input type='hidden' name="{%= CurrentQuestion.Iteration(j).InputName() %}" id="input_{%=CurrentADC.InstanceId%}_{%= CurrentQuestion.Iteration(j).InputName() %}" value="{%= CurrentQuestion.Iteration(j).AvailableResponses[CurrentQuestion.Iteration(j).Value].InputValue()%}"/>
 {% 
 Next
 %}

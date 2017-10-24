@@ -1,14 +1,19 @@
 (function () {
-    var hoverCol = 'rgb({%= CurrentADC.PropValue("hoverColor") %})';
+    var hoverCol = '';
+    var likeColor = '';
+    var neutralColor = '';
+    var dislikeColor = '';
+    var numResponses = 3;
+    var likeOpt = 1;
     /**
      * it colors the area in yellow when mouse hover
      */
     function hoverIn() {
         areas = document.querySelectorAll("path");
         for(i=0; i<areas.length; ++i) {
-        	if (areas[i].getAttribute("class") != "colored") areas[i].setAttribute("class", "unselected");
+        	if (areas[i].getAttribute("fill") == "#000000") areas[i].setAttribute("class", "unselected");
         }
-        if(this.node.getAttribute("class") != "colored") this.node.removeAttribute("class");
+        //if(this.node.getAttribute("fill") == "#000000") this.node.removeAttribute("class");
         //this.node.setAttribute("fill-opacity", "1");
         if (this.data("color") == "none") {
             this.node.removeAttribute("class");
@@ -59,27 +64,27 @@
         switch (btn.className) {
             case ("like"):
 				area.node.setAttribute("class", "colored");
-                response.value = values[0] + {%= CurrentQuestion.Iteration(1).AvailableResponses[1].InputValue()%} -1;
+                response.value = values[0];
                 area.attr({
-                    fill: 'rgb({%= CurrentADC.PropValue("likeColor") %})',
+                    fill: likeColor,
                     opacity: 0.5
                 });
                 area.data("color", "green");
                 break;
             case ("neutral"):
                 area.node.setAttribute("class", "colored");
-                response.value = values[1] + {%= CurrentQuestion.Iteration(1).AvailableResponses[1].InputValue()%} -1;
+                response.value = values[1];
                 area.attr({
-                    fill: 'rgb({%= CurrentADC.PropValue("neutralColor") %})',
+                    fill: neutralColor,
                     opacity: 0.5
                 });
                 area.data("color", "blue");
                 break;
             case ("dislike"):
                 area.node.setAttribute("class", "colored");
-                response.value = (values[values.length - 1] + {%= CurrentQuestion.Iteration(1).AvailableResponses[1].InputValue()%} -1);
+                response.value = (values[values.length - 1]);
                 area.attr({
-                    fill: 'rgb({%= CurrentADC.PropValue("dislikeColor") %})',
+                    fill: dislikeColor,
                     opacity: 0.5
                 });
                 area.data("color", "red");
@@ -219,11 +224,11 @@
             if (area.data("color") == "none") {
                 area.node.setAttribute("class", "colored");
                 area.attr({
-                    fill: 'rgb({%= CurrentADC.PropValue("likeColor") %})',
+                    fill: likeColor,
 					opacity: 0.5
                 });
                 area.data("color", "green");
-                myDiv.getElementsByTagName("input")[index].value = (values[0] + {%= CurrentQuestion.Iteration(1).AvailableResponses[1].InputValue()%} -1);
+                myDiv.getElementsByTagName("input")[index].value = (values[0]);
             } else {
                 area.node.setAttribute("class", "neutralArea");
                 area.attr({
@@ -248,11 +253,11 @@
             if (area.data("color") == "none") {
 				area.node.setAttribute("class", "colored");
                 area.attr({
-					fill: 'rgb({%= CurrentADC.PropValue("dislikeColor") %})',
+					fill: dislikeColor,
                     opacity: 0.5
                 });
                 area.data("color", "red");
-                myDiv.getElementsByTagName("input")[index].value = (values[0] + {%= CurrentQuestion.Iteration(1).AvailableResponses[1].InputValue()%} -1);
+                myDiv.getElementsByTagName("input")[index].value = (values[0]);
             } else {
 				area.node.setAttribute("class", "neutralArea");
                 area.attr({
@@ -275,21 +280,21 @@
      */
     function init(areas, inputs, values, set) {
         for (var i = 0; i < inputs.length; i++) {
-            if (inputs[i].value == values[0]) {
+            if (inputs[i].value == values[0] && ((numResponses > 1) || ((numResponses == 1) && likeOpt == 1))) {
                 areas[i].attr({
-                    fill: '#90ee90',
+                    fill: likeColor,
                     opacity: 0.5
                 });
                 areas[i].data("color", "green");
-            } else if (inputs[i].value == values[1] && values.length == 3) {
+            } else if (inputs[i].value == values[1] && numResponses == 3) {
                 areas[i].attr({
-                    fill: '#add8e6',
+                    fill: neutralColor,
                     opacity: 0.5
                 });
                 areas[i].data("color", "blue");
             } else if (inputs[i].value != "") {
                 areas[i].attr({
-                    fill: '#f08080',
+                    fill: dislikeColor,
                     opacity: 0.5
                 });
                 areas[i].data("color", "red");
@@ -309,8 +314,15 @@
         this.areas = parameters.areas;
         this.option = parameters.option;
         this.values = parameters.values;
-        this.imageWidth = parameters.imageWidth;
-        this.imageHeight = parameters.imageHeight;
+        this.imageWidth = parseFloat(parameters.imageWidth);
+        this.imageHeight = parseFloat(parameters.imageHeight);
+        
+        hoverCol = parameters.hoverColor;
+        likeColor = parameters.likeColor;
+        neutralColor = parameters.neutralColor;
+        dislikeColor = parameters.dislikeColor;
+        numResponses = parameters.numResponses;
+        likeOpt = parameters.likeOpt;
 
         var myDiv = document.getElementById(this.adcID);
         var imgWidth = myDiv.querySelector("img").clientWidth;
