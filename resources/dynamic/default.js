@@ -33,5 +33,6 @@ var imageHotspot = new ImageHotspot({adcContainer:"adc-container{%= CurrentADC.I
     neutralColor:'rgb({%= CurrentADC.PropValue("neutralColor").ToRGB() %})',
     dislikeColor:'rgb({%= CurrentADC.PropValue("dislikeColor").ToRGB() %})',
     numResponses:{%= CurrentQuestion.Iteration(1).AvailableResponses.Count %},
-    likeOpt:{%= CurrentADC.PropValue("likeOpt") %}
+    likeOpt:{%= CurrentADC.PropValue("likeOpt") %},
+    currentQuestion: '{%:= CurrentQuestion.Shortcut %}'
 });

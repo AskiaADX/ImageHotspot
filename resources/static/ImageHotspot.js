@@ -5,6 +5,7 @@
     var dislikeColor = '';
     var numResponses = 3;
     var likeOpt = 1;
+    var currentQuestion = '';
     /**
      * it colors the area in yellow when mouse hover
      */
@@ -70,6 +71,12 @@
                     opacity: 0.5
                 });
                 area.data("color", "green");
+                if (window.askia && 
+                    window.arrLiveRoutingShortcut && 
+                    window.arrLiveRoutingShortcut.length > 0 &&
+                    window.arrLiveRoutingShortcut.indexOf(currentQuestion) >= 0) {
+                    askia.triggerAnswer();
+                }
                 break;
             case ("neutral"):
                 area.node.setAttribute("class", "colored");
@@ -79,6 +86,12 @@
                     opacity: 0.5
                 });
                 area.data("color", "blue");
+                if (window.askia && 
+                    window.arrLiveRoutingShortcut && 
+                    window.arrLiveRoutingShortcut.length > 0 &&
+                    window.arrLiveRoutingShortcut.indexOf(currentQuestion) >= 0) {
+                    askia.triggerAnswer();
+                }
                 break;
             case ("dislike"):
                 area.node.setAttribute("class", "colored");
@@ -88,6 +101,12 @@
                     opacity: 0.5
                 });
                 area.data("color", "red");
+                if (window.askia && 
+                    window.arrLiveRoutingShortcut && 
+                    window.arrLiveRoutingShortcut.length > 0 &&
+                    window.arrLiveRoutingShortcut.indexOf(currentQuestion) >= 0) {
+                    askia.triggerAnswer();
+                }
                 break;
             case ("remove"):
                 area.node.setAttribute("class", "neutralArea");
@@ -97,6 +116,12 @@
                     opacity: 0
                 });
                 area.data("color", "none");
+                if (window.askia && 
+                    window.arrLiveRoutingShortcut && 
+                    window.arrLiveRoutingShortcut.length > 0 &&
+                    window.arrLiveRoutingShortcut.indexOf(currentQuestion) >= 0) {
+                    askia.triggerAnswer();
+                }
                 break;
         }
     }
@@ -238,6 +263,12 @@
                 area.data("color", "none");
                 myDiv.getElementsByTagName("input")[index].value = "";
             }
+            if (window.askia && 
+                window.arrLiveRoutingShortcut && 
+                window.arrLiveRoutingShortcut.length > 0 &&
+                window.arrLiveRoutingShortcut.indexOf(currentQuestion) >= 0) {
+                askia.triggerAnswer();
+            }
         }
     }
 
@@ -266,6 +297,12 @@
                 });
                 area.data("color", "none");
                 myDiv.getElementsByTagName("input")[index].value = "";
+            }
+            if (window.askia && 
+                window.arrLiveRoutingShortcut && 
+                window.arrLiveRoutingShortcut.length > 0 &&
+                window.arrLiveRoutingShortcut.indexOf(currentQuestion) >= 0) {
+                askia.triggerAnswer();
             }
         }
         
@@ -323,6 +360,7 @@
         dislikeColor = parameters.dislikeColor;
         numResponses = parameters.numResponses;
         likeOpt = parameters.likeOpt;
+        currentQuestion = parameters.currentQuestion;
 
         var myDiv = document.getElementById(this.adcID);
         var imgWidth = myDiv.querySelector("img").clientWidth;
