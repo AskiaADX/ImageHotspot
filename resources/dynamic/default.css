@@ -10,6 +10,7 @@ EndIf
 %}
 #adc_{%= CurrentADC.InstanceId %} {
     text-align: {%= CurrentADC.PropValue("controlAlign") %};
+    margin: {%= controlAlign %};
 }
 #adc_{%= CurrentADC.InstanceId %} svg {
     margin: {%= controlAlign %};

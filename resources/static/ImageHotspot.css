@@ -60,7 +60,6 @@ body {
     background-color: #555;
     background-repeat: no-repeat; 
     z-index: 12;
-    -webkit-overflow-scrolling: touch;
 }
 
 
@@ -93,34 +92,9 @@ body {
 
 
 /* show the popup */
-
 .adc-imageHotspot .show {
     visibility: visible;
-    /*-webkit-animation: fadeIn 0.5s;
-    animation: fadeIn 0.5s*/
 }
-
-
-/* Add animation (fade in the popup) */
-
-@-webkit-keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
 
 .adc-imageHotspot path.unselected {
 	display:none

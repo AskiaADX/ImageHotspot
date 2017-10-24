@@ -363,6 +363,7 @@
         currentQuestion = parameters.currentQuestion;
 
         var myDiv = document.getElementById(this.adcID);
+        myDiv.style.maxWidth = this.imageWidth + "px";
         myDiv.querySelector("img").style.maxWidth = this.imageWidth + "px";
         var imgWidth = myDiv.querySelector("img").clientWidth;
         var imgHeight = myDiv.querySelector("img").clientHeight;
@@ -396,11 +397,11 @@
             });
         } else if (this.option == 1) {
             set.click(function (event) {
-                like(event, this, parameters.values, myDiv)
+                like(event, this, parameters.values, myDiv);
             });
         } else if (this.option == -1) {
             set.click(function (event) {
-                dislike(event, this, parameters.values, myDiv)
+                dislike(event, this, parameters.values, myDiv);
             });
         }
         
