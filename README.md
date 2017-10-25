@@ -1,2 +1,2 @@
-# adc2-imageHotspot
+Image Hotspot
    

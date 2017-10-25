@@ -180,7 +180,7 @@
         if (document.querySelectorAll(".show").length == 0) {
             var areas = document.querySelectorAll("path");
             for(i=0; i<areas.length; ++i) {
-                if (areas[i].getAttribute("class") != "colored") areas[i].setAttribute("class", "unselected");
+                if (areas[i].getAttribute("class") != "colored") areas[i].setAttribute("class", "neutralArea");
             }
             popup.className += " show";
         } else {
@@ -389,7 +389,12 @@
         
         init(areas, myDiv.getElementsByTagName("input"), this.values, set);
         
-        set.hover(hoverIn, hoverOut);
+        var isTouch =  !!("ontouchstart" in window) || window.navigator.msMaxTouchPoints > 0;
+
+        if( !isTouch ){
+            // add class which defines hover behavior
+            set.hover(hoverIn, hoverOut);
+        }
 
         if (this.option >= 2) {
             set.click(function (event) {
