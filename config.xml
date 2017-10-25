@@ -7,7 +7,7 @@
   <info>
     <name>ImageHotspot</name>
     <guid>4022e85e-485e-4f54-bc38-7c7db8dc012c</guid>
-    <version>2.0.3</version>
+    <version>2.0.4</version>
     <date>2017-05-23</date>
     <description><![CDATA[]]></description>
     <company></company>
@@ -73,8 +73,20 @@
           <option value="0" text="Dislike" />
         </options>
       </property>
+      <property xsi:type="standardProperty" id="showAreas" name="Show areas at start" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[Show areas at start]]></description>
+        <value><![CDATA[1]]></value>
+        <options>
+          <option value="1" text="Yes" />
+          <option value="0" text="No" />
+        </options>
+      </property>
     </category>
     <category id="colours" name="Colours">
+      <property xsi:type="standardProperty" id="areasColor" name="Areas colour" type="color" mode="static" require="false" visible="true" colorFormat="rgb">
+        <description><![CDATA[Colour of the area(s)]]></description>
+        <value><![CDATA[0,0,0]]></value>
+      </property>
       <property xsi:type="standardProperty" id="hoverColor" name="Hover colour" type="color" mode="static" require="false" visible="true" colorFormat="rgb">
         <description><![CDATA[Colour of the area(s) when hovered upon]]></description>
         <value><![CDATA[251,255,207]]></value>

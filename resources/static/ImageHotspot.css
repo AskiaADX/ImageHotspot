@@ -97,5 +97,5 @@ body {
 }
 
 .adc-imageHotspot path.unselected {
-	display:none
+	/* display:none */
 }

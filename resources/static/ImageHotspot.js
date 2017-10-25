@@ -6,23 +6,26 @@
     var numResponses = 3;
     var likeOpt = 1;
     var currentQuestion = '';
+    var showAreas = '';
+    var areasColor = '';
+    var opacity = 0;
     /**
      * it colors the area in yellow when mouse hover
      */
     function hoverIn() {
         areas = document.querySelectorAll("path");
         for(i=0; i<areas.length; ++i) {
-        	if (areas[i].getAttribute("fill") == "#000000") areas[i].setAttribute("class", "unselected");
+        	if (areas[i].getAttribute("fill") == areasColor) areas[i].setAttribute("class", "unselected");
         }
-        //if(this.node.getAttribute("fill") == "#000000") this.node.removeAttribute("class");
+        //if(this.node.getAttribute("fill") == areasColor) this.node.removeAttribute("class");
         //this.node.setAttribute("fill-opacity", "1");
         if (this.data("color") == "none") {
             this.node.removeAttribute("class");
             this.attr({
                 cursor: 'pointer',
                 fill: hoverCol,
-                stroke: '#000000',
-                'stroke-width': '1',
+                stroke: areasColor,
+                'stroke-width': '0',
                 opacity: 0.5
             });
         } else {
@@ -44,8 +47,8 @@
         if (this.data("color") == "none") {
             this.node.setAttribute("class", "neutralArea");
             this.attr({
-                opacity: 0,
-                fill: '#000000',
+                opacity: opacity,
+                fill: areasColor,
                 'stroke-width': '0'
             });
         }
@@ -112,8 +115,8 @@
                 area.node.setAttribute("class", "neutralArea");
                 response.value = "";
                 area.attr({
-                    fill: '#000000',
-                    opacity: 0
+                    fill: areasColor,
+                    opacity: opacity
                 });
                 area.data("color", "none");
                 if (window.askia && 
@@ -257,8 +260,8 @@
             } else {
                 area.node.setAttribute("class", "neutralArea");
                 area.attr({
-                    fill: '#000000',
-                    opacity: 0
+                    fill: areasColor,
+                    opacity: opacity
                 });
                 area.data("color", "none");
                 myDiv.getElementsByTagName("input")[index].value = "";
@@ -292,8 +295,8 @@
             } else {
 				area.node.setAttribute("class", "neutralArea");
                 area.attr({
-                    fill: '#000000',
-                    opacity: 0
+                    fill: areasColor,
+                    opacity: opacity
                 });
                 area.data("color", "none");
                 myDiv.getElementsByTagName("input")[index].value = "";
@@ -361,6 +364,9 @@
         numResponses = parameters.numResponses;
         likeOpt = parameters.likeOpt;
         currentQuestion = parameters.currentQuestion;
+        showAreas = parameters.showAreas;
+        areasColor = parameters.areasColor;
+        opacity = (showAreas === '1') ? 0.1 : 0;
 
         var myDiv = document.getElementById(this.adcID);
         myDiv.style.maxWidth = this.imageWidth + "px";
@@ -380,8 +386,8 @@
         for (var i = 0; i < this.areas.length; i++) {
             areas.push(paper.path(this.areas[i].paath).attr({
                 'stroke-width': '0',
-                opacity: 0,
-                fill: '#000000',
+                opacity: opacity,
+                fill: areasColor,
             }).data("color", "none").data("name", this.areas[i].name));
 			areas[i].node.setAttribute("class", "neutralArea");
             createPopup(myDiv, this.option, areas[i], this.values);
