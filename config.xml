@@ -11,7 +11,8 @@
     <date>2017-05-23</date>
     <description><![CDATA[
 		v2.0.6 - Add alt attribute to img
-			   - Add addSpan() function in static/ImageHotspot.js]]></description>
+			   - Add addSpan() function in static/ImageHotspot.js
+			   - Created routing for web accessibility (enhanced)]]></description>
     <company></company>
     <author><![CDATA[]]></author>
     <site></site>
