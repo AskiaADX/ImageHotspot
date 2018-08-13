@@ -7,9 +7,11 @@
   <info>
     <name>ImageHotspot</name>
     <guid>4022e85e-485e-4f54-bc38-7c7db8dc012c</guid>
-    <version>2.0.5</version>
+    <version>2.0.4</version>
     <date>2017-05-23</date>
-    <description><![CDATA[]]></description>
+    <description><![CDATA[
+		v2.0.6 - Add alt attribute to img
+			   - Add addSpan() function in static/ImageHotspot.js]]></description>
     <company></company>
     <author><![CDATA[]]></author>
     <site></site>

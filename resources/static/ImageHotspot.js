@@ -197,6 +197,17 @@
     }
 
     /**
+    * Adds hidden span in button for web accessibility
+    * @param
+    */
+    function addSpan(button) {
+        var span = document.createElement("span");
+        span.hidden = true;
+        span.innerHTML = button.className.split(" ")[0];
+        button.appendChild(span);
+    }
+    
+    /**
      * Adds buttons in the popup
      * @param {HTMLElement} popup  Container of the popup
      * @param {number} option Option which defines the number of buttons
@@ -208,9 +219,13 @@
             buttonR = document.createElement("button");
 
         buttonD.className = "dislike";
+        addSpan(buttonD);
         buttonL.className = "like";
+        addSpan(buttonL);
         buttonN.className = "neutral";
+        addSpan(buttonN);
         buttonR.className = "remove";
+        addSpan(buttonR);
 
         if (option == 3) {
             popup.appendChild(buttonL);
