@@ -7,12 +7,13 @@
   <info>
     <name>ImageHotspot</name>
     <guid>4022e85e-485e-4f54-bc38-7c7db8dc012c</guid>
-    <version>2.0.4</version>
+    <version>3.0.0</version>
     <date>2017-05-23</date>
     <description><![CDATA[
 		v2.0.6 - Add alt attribute to img
 			   - Add addSpan() function in static/ImageHotspot.js
-			   - Created routing for web accessibility (enhanced)]]></description>
+			   - Created routing for web accessibility (enhanced)
+		v3.0.0 - AvailableAnswers]]></description>
     <company></company>
     <author><![CDATA[]]></author>
     <site></site>
@@ -21,7 +22,7 @@
       <category>General</category>
     </categories>
     <constraints>
-      <constraint on="questions" chapter="false" single="true" multiple="false" numeric="false" date="false" open="false" requireParentLoop="true" />
+      <constraint on="questions" chapter="false" single="true" multiple="false" numeric="false" date="false" open="false" requireParentLoop="true" RequireLoopDepth="true" />
       <constraint on="controls" responseblock="true" label="false" textbox="false" checkbox="false" listbox="false" radiobutton="false" />
       <constraint on="responses" max="*" min="*" />
     </constraints>

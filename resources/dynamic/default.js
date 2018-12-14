@@ -10,7 +10,7 @@ var imageHotspot = new ImageHotspot({adcContainer:"adc-container{%= CurrentADC.I
 		Dim coords = ""
 		Dim propname = ""
 		Dim areaname = ""
-		For j = 1 To CurrentQuestion.ParentLoop.Answers.Count
+		For j = 1 To CurrentQuestion.ParentLoop.AvailableAnswers.Count
     		'For i = 1 To CurrentQuestion.Iteration(j).AvailableResponses.Count 
     		propname = "hotspot"+j
     		areaname = "P"+(j - 1)
@@ -19,7 +19,7 @@ var imageHotspot = new ImageHotspot({adcContainer:"adc-container{%= CurrentADC.I
 		{
         	paath: "{%= coords %}",
         	name: "{%= areaname %}"
-		{%:= On(j = CurrentQuestion.ParentLoop.Answers.Count,"}","},") %}
+            {%:= On(j = CurrentQuestion.ParentLoop.AvailableAnswers.Count,"}","},") %}
 	{%                                      
 		Next
 	%}
