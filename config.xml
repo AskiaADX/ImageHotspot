@@ -22,13 +22,13 @@
       <category>General</category>
     </categories>
     <constraints>
-      <constraint on="questions" chapter="false" single="true" multiple="false" numeric="false" date="false" open="false" requireParentLoop="true" RequireLoopDepth="true" />
+      <constraint on="questions" chapter="false" single="true" multiple="false" numeric="false" date="false" open="false" requireParentLoop="true" RequireLoopDepth="1" />
       <constraint on="controls" responseblock="true" label="false" textbox="false" checkbox="false" listbox="false" radiobutton="false" />
       <constraint on="responses" max="*" min="*" />
     </constraints>
   </info>
   <outputs defaultOutput="default">
-    <output id="default">
+    <output id="default" ManageLoopDepth="1">
       <description><![CDATA[Default output]]></description>
       <content fileName="ImageHotspot.css" type="css" mode="static" position="head" />
       <content fileName="default.css" type="css" mode="dynamic" position="head" />
