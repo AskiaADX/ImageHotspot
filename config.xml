@@ -7,7 +7,7 @@
   <info>
     <name>ImageHotspot</name>
     <guid>4022e85e-485e-4f54-bc38-7c7db8dc012c</guid>
-    <version>3.0.0</version>
+    <version>3.0.1</version>
     <date>2017-05-23</date>
     <description><![CDATA[
 		v2.0.6 - Add alt attribute to img
@@ -22,13 +22,13 @@
       <category>General</category>
     </categories>
     <constraints>
-      <constraint on="questions" chapter="false" single="true" multiple="false" numeric="false" date="false" open="false" requireParentLoop="true" requireLoopDepth="1" />
-      <constraint on="controls" responseblock="true" label="false" textbox="false" checkbox="false" listbox="false" radiobutton="false" />
+      <constraint on="questions" chapter="false" single="true" multiple="false" numeric="false" date="false" open="false" requireParentLoop="true" requireLoopDepth="true" />
+      <constraint on="controls" responseblock="true" label="false" textbox="false" checkbox="false" listbox="false" radiobutton="true" />
       <constraint on="responses" max="*" min="*" />
     </constraints>
   </info>
   <outputs defaultOutput="default">
-    <output id="default" manageLoopDepth="1">
+    <output id="default">
       <description><![CDATA[Default output]]></description>
       <content fileName="ImageHotspot.css" type="css" mode="static" position="head" />
       <content fileName="default.css" type="css" mode="dynamic" position="head" />
