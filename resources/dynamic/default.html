@@ -8,7 +8,7 @@ Dim pathImg = CurrentADC.PropValue("imageURL")
 Dim inputName
 If CurrentQuestion.Type = "single" Then
     inputName = CurrentQuestion.InputName()
-EndIf    
+EndIf
 
 Dim inputValue
 Dim caption
@@ -17,14 +17,14 @@ Dim i
 %}
 
 <div id="adc-container{%= CurrentADC.InstanceId %}" class="container"></div>
-{% 
+{%
 Dim inputId
 Dim attrChecked
 Dim j
 For j = 1 To CurrentQuestion.ParentLoop.AvailableAnswers.Count
 %}
-    <input type='hidden' name="{%= CurrentQuestion.Iteration(j).InputName() %}" id="input_{%=CurrentADC.InstanceId%}_{%= CurrentQuestion.Iteration(j).InputName() %}" value="{%= CurrentQuestion.Iteration(j).AvailableResponses[CurrentQuestion.Iteration(j).Value].InputValue()%}"/>
-{% 
+    <input type='hidden' name="{%= CurrentQuestion.Iteration(j).InputName() %}" id="input_{%=CurrentADC.InstanceId%}_{%= CurrentQuestion.Iteration(j).InputName() %}" value="{%= CurrentQuestion.Iteration(j).AvailableResponses[(CurrentQuestion.Iteration(j).Value).ToNumber()].InputValue()%}"/>
+{%
 Next
 %}
 
