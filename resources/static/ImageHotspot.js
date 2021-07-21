@@ -454,11 +454,11 @@
         window.addEventListener("resize", function(e) {
             e.preventDefault;
             var width = myDiv.querySelector("img").clientWidth;
-        	var height = myDiv.querySelector("img").clientHeight;
-            myDiv.querySelector("svg").setAttribute("width", width);
-            myDiv.querySelector("svg").setAttribute("height", height);
-            myDiv.querySelector("svg").style.height = height;
-            myDiv.querySelector("svg").style.width = width;
+        	var height = myDiv.querySelector("img").clientHeight;        
+            myDiv.querySelector("svg").setAttribute("width", '' + width + 'px');
+            myDiv.querySelector("svg").setAttribute("height", '' + height + 'px');
+            myDiv.querySelector("svg").style.height = '' + height + 'px';
+            myDiv.querySelector("svg").style.width = '' + width + 'px';
 		});
         
         
@@ -466,10 +466,10 @@
             e.preventDefault;
             var width = myDiv.querySelector("img").clientWidth;
         	var height = myDiv.querySelector("img").clientHeight;
-            myDiv.querySelector("svg").setAttribute("width", width);
-            myDiv.querySelector("svg").setAttribute("height", height);
-            myDiv.querySelector("svg").style.height = height;
-            myDiv.querySelector("svg").style.width = width;
+            myDiv.querySelector("svg").setAttribute("width", '' + width + 'px');
+            myDiv.querySelector("svg").setAttribute("height", '' + height + 'px');
+            myDiv.querySelector("svg").style.height = '' + height + 'px';
+            myDiv.querySelector("svg").style.width = '' + width + 'px';
 		});
 		
     }
