@@ -7,27 +7,28 @@
   <info>
     <name>ImageHotspot</name>
     <guid>4022e85e-485e-4f54-bc38-7c7db8dc012c</guid>
-    <version>4.0.0</version>
-    <date>2017-05-23</date>
-    <description><![CDATA[
-		v2.0.6 - Add alt attribute to img
+    <version>4.1.0</version>
+    <date>2022-04-25</date>
+    <description><![CDATA[v2.0.6 - Add alt attribute to img
 			   - Add addSpan() function in static/ImageHotspot.js
 			   - Created routing for web accessibility (enhanced)
 		v3.0.0 - AvailableAnswers
         v3.0.4 - added in changes from v2.0.8
         v4.0.0 - added file type parameter
-    ]]></description>
+        v4.1.0 - added ranking mode
+			   - properties and code cleanup
+			   - improved documentation]]></description>
     <company></company>
-    <author><![CDATA[]]></author>
+    <author><![CDATA[David Edelmann <david@askia.com>]]></author>
     <site></site>
-    <helpURL></helpURL>
+    <helpURL>https://support.askia.com/hc/en-us/articles/115003664689-Image-Hotspot</helpURL>
     <categories>
       <category>General</category>
     </categories>
     <constraints>
-      <constraint on="questions" chapter="false" single="true" multiple="false" numeric="false" date="false" open="false" requireParentLoop="true" requireLoopDepth="1" />
+      <constraint on="questions" chapter="false" single="true" multiple="false" numeric="true" date="false" open="false" requireParentLoop="true" requireLoopDepth="1" />
       <constraint on="controls" responseblock="true" label="false" textbox="false" checkbox="false" listbox="false" radiobutton="true" />
-      <constraint on="responses" max="*" min="*" />
+      <constraint on="responses" max="200" min="1" />
     </constraints>
   </info>
   <outputs defaultOutput="default">
@@ -36,6 +37,8 @@
       <content fileName="ImageHotspot.css" type="css" mode="static" position="head" />
       <content fileName="default.css" type="css" mode="dynamic" position="head" />
       <content fileName="raphael.min.js" type="javascript" mode="static" position="head" />
+      <content fileName="raphael.centroid.js" type="javascript" mode="static" position="head" />
+      <content fileName="SortedSet.js" type="javascript" mode="static" position="head" />
       <content fileName="default.html" type="html" mode="dynamic" position="placeholder" />
       <content fileName="ImageHotspot.js" type="javascript" mode="static" position="foot" />
       <content fileName="default.js" type="javascript" mode="dynamic" position="foot" />
@@ -68,30 +71,45 @@
         <description><![CDATA[Image width (pixels)]]></description>
         <value></value>
       </property>
-      <property xsi:type="standardProperty" id="numOptions" name="Number of Options" type="number" mode="dynamic" require="false" visible="false" min="1" max="3">
-        <description><![CDATA[Number of options]]></description>
-        <value><![CDATA[{% CurrentQuestion.Iteration(1).AvailableResponses.Count %}]]></value>
-      </property>
-      <property xsi:type="standardProperty" id="likeOpt" name="Like Option" type="string" require="false" visible="true">
-        <description><![CDATA[]]></description>
+      <property xsi:type="standardProperty" id="mode" name="Question mode" type="string" require="true" visible="true">
+        <description><![CDATA[Question mode determines what happens when clicking on an area
+
+Selection - area is selected (using Positive Colour)
+    on closed question: first response is saved
+    on numeric question: value 1 is saved
+
+Ranking - order of area selection (using Positive Colour)
+    on closed question: first response is saved for first selection, second response for second selection etc.
+    on numeric question: rank is saved as value
+
+Like/Dislike - popup to select like/dislike for the area
+    on closed question: first response is saved for like, second for dislike
+    on numeric question: value 1 is saved for like, -1 for dislike
+
+Like/Neutral/Dislike - popup to select like/neutral/dislike for the area
+    on closed question: first response is saved for like, second for neutral and third for dislike
+    on numeric question: value 1 is saved for like, 0 for neutral and -1 for dislike
+]]></description>
         <value><![CDATA[1]]></value>
         <options>
-          <option value="1" text="Like" />
-          <option value="0" text="Dislike" />
+          <option value="1" text="Selection" />
+          <option value="2" text="Ranking" />
+          <option value="3" text="Like/Dislike" />
+          <option value="4" text="Like/Neutral/Dislike" />
         </options>
       </property>
-      <property xsi:type="standardProperty" id="showAreas" name="Show areas at start" type="string" mode="dynamic" require="true" visible="true">
+      <property xsi:type="standardProperty" id="showAreas" name="Show areas at start" type="boolean" mode="static" require="true" visible="true">
         <description><![CDATA[Show areas at start]]></description>
         <value><![CDATA[1]]></value>
-        <options>
-          <option value="1" text="Yes" />
-          <option value="0" text="No" />
-        </options>
       </property>
     </category>
     <category id="colours" name="Colours">
-      <property xsi:type="standardProperty" id="areasColor" name="Areas colour" type="color" mode="static" require="false" visible="true" colorFormat="rgb">
-        <description><![CDATA[Colour of the area(s)]]></description>
+      <property xsi:type="standardProperty" id="areasOpacity" name="Area opacity" type="number" mode="static" require="false" visible="true" min="0" max="1">
+        <description><![CDATA[Opacity of the unselected area(s) when "Show areas at start" is "Yes"]]></description>
+        <value><![CDATA[0.1]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="areasColor" name="Inital colour" type="color" mode="static" require="false" visible="true" colorFormat="rgb">
+        <description><![CDATA[Colour of the unselected area(s) when "Show areas at start" is "Yes"]]></description>
         <value><![CDATA[0,0,0]]></value>
       </property>
       <property xsi:type="standardProperty" id="hoverColor" name="Hover colour" type="color" mode="static" require="false" visible="true" colorFormat="rgb">
@@ -112,6 +130,14 @@
       </property>
     </category>
     <category id="hotspots" name="Hotspots">
+      <property xsi:type="standardProperty" id="useHotspotArray" name="Use Hotspot Array" type="boolean" mode="static" require="true" visible="true">
+        <description><![CDATA[Choice between using single property with an array of hotspots or individual areas]]></description>
+        <value><![CDATA[0]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="hotspotArray" name="Hotspot Array" type="string" require="false" visible="true">
+        <description><![CDATA[Array of hotspot areas, separated by pipe "|"]]></description>
+        <value></value>
+      </property>
       <property xsi:type="standardProperty" id="hotspot1" name="Hotspot Area 1" type="string" mode="dynamic" require="true" visible="true">
         <description><![CDATA[Coordinates for hotspot #1]]></description>
         <value></value>

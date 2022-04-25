@@ -1,31 +1,17 @@
-{%
-Dim pathImg = CurrentADC.PropValue("imageURL")
-%}
-
+{% Dim pathImg = CurrentADC.PropValue("imageURL") %}
 <div id="adc_{%= CurrentADC.InstanceId %}" class="adc-default adc-imageHotspot">
     <img id="imgADC_{%= CurrentADC.InstanceId %}" src="{%= pathImg %}" alt="{%= pathImg%}"/>
+    <div id="adc-container{%= CurrentADC.InstanceId %}" class="container"></div>
 {%
-Dim inputName
-If CurrentQuestion.Type = "single" Then
-    inputName = CurrentQuestion.InputName()
-EndIf
-
 Dim inputValue
-Dim caption
-
-Dim i
-%}
-
-<div id="adc-container{%= CurrentADC.InstanceId %}" class="container"></div>
-{%
-Dim inputId
-Dim attrChecked
 Dim j
 For j = 1 To CurrentQuestion.ParentLoop.AvailableAnswers.Count
+    If CurrentQuestion.Type = "single" Then
+    	inputValue = CurrentQuestion.Iteration(j).AvailableResponses[(CurrentQuestion.Iteration(j).Value).ToNumber()].InputValue()
+    Else
+        inputValue = CurrentQuestion.Iteration(j).Value
+	EndIf
 %}
-    <input type='hidden' name="{%= CurrentQuestion.Iteration(j).InputName() %}" id="input_{%=CurrentADC.InstanceId%}_{%= CurrentQuestion.Iteration(j).InputName() %}" value="{%= CurrentQuestion.Iteration(j).AvailableResponses[(CurrentQuestion.Iteration(j).Value).ToNumber()].InputValue()%}"/>
-{%
-Next
-%}
-
+    <input type='hidden' name="{%= CurrentQuestion.Iteration(j).InputName() %}" id="input_{%=CurrentADC.InstanceId%}_{%= CurrentQuestion.Iteration(j).InputName() %}" value="{%= inputValue %}"/>
+{% Next %}
 </div>

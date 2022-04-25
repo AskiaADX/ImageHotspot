@@ -3,12 +3,45 @@
     var likeColor = '';
     var neutralColor = '';
     var dislikeColor = '';
-    var numResponses = 3;
     var likeOpt = 1;
     var currentQuestion = '';
-    var showAreas = '';
     var areasColor = '';
     var opacity = 0;
+    /**
+     * create the text label for a path object
+     * @param {RaphaelElement} pathObj  path object that should be labeled
+     * @param {string} text  content of the label
+     * @param {object} textattr  (optional) attributes for the label
+     */
+    function labelPath( pathObj, text, textattr )
+    {
+        if ( textattr == undefined ) {
+            textattr = { fill: '#000', stroke: 'none', 'font-family': 'Arial,Helvetica,sans-serif', 'font-weight': 400 };
+        }
+        var center = pathObj.getCentroid();
+        var bbox = pathObj.getBBox();
+        var fontSize = Math.min(bbox.width, bbox.height)/2 * Math.abs(center.area) / bbox.width / bbox.height;
+        var newx = center.x, newy = center.y;
+        if (pathObj.paper.getElementsByPoint(bbox.cx,bbox.cy)[0] !== pathObj) {
+            // try to place label inside shape
+            var dx = 0.1 * (Math.abs(bbox.cx - center.x) > 1e-4 ? (bbox.cx - center.x) : 1), dy = 0.1 * (Math.abs(bbox.cy - center.y) > 1e-4 ? (bbox.cy - center.y) : 1);
+            while (newx > bbox.x && newx < bbox.x2 && newy > bbox.y && newy < bbox.y2) {
+                newx += dx, newy += dy;
+                if (pathObj.paper.getElementsByPoint(newx,newy)[0] === pathObj)
+                    break;
+            }
+            newx -= dx, newy -= dy;
+            while (newx > bbox.x && newx < bbox.x2 && newy > bbox.y && newy < bbox.y2) {
+                newx -= dx, newy -= dy;
+                if (pathObj.paper.getElementsByPoint(newx,newy)[0] === pathObj)
+                    break;
+            }
+            newx += ((newx - center.x) >= 0 ? 1 : -1) * fontSize;
+        }
+        var textObj = pathObj.paper.text(newx, newy, text).attr(textattr).attr({'font-size': fontSize});
+        return textObj;
+    }
+    
     /**
      * it colors the area in yellow when mouse hover
      */
@@ -158,11 +191,10 @@
 
     /**
      * Displays the popup when an area is selected
-     * @param {number} option Option which defines the number of buttons
      * @param {HTMLElement}   myDiv  div which contains the ADC
      * @param {RaphaelPaper} area   selected area
      */
-    function displayPopup(event, option, myDiv, area) {
+    function displayPopup(event, myDiv, area) {
         var index = area.data("name").substr(1);
         var popup = myDiv.querySelectorAll(".popuptext")[index];
         popup.style.position = "fixed";
@@ -210,9 +242,9 @@
     /**
      * Adds buttons in the popup
      * @param {HTMLElement} popup  Container of the popup
-     * @param {number} option Option which defines the number of buttons
+     * @param {number} mode Mode which defines the number of buttons
      */
-    function addButtons(popup, option) {
+    function addButtons(popup, mode) {
         var buttonL = document.createElement("button"),
             buttonD = document.createElement("button"),
             buttonN = document.createElement("button"),
@@ -227,7 +259,7 @@
         buttonR.className = "remove";
         addSpan(buttonR);
 
-        if (option == 3) {
+        if (mode == 4) {
             popup.appendChild(buttonL);
             popup.appendChild(buttonN);
             popup.appendChild(buttonD);
@@ -242,26 +274,26 @@
     /**
      * Creation of the popup
      * @param {HTMLElement} myDiv  dic which contains the ADC
-     * @param {number} option Option which defines the number of buttons
+     * @param {number} mode Mode which defines the number of buttons
      * @param {RaphaelPaper} area   Selected area
      * @param {Array} values Array of the values for the inputs
      */
-    function createPopup(myDiv, option, area, values) {
+    function createPopup(myDiv, mode, area, values) {
         var popup = document.createElement("div");
         popup.className = "popuptext";
         myDiv.appendChild(popup);
 
-        addButtons(popup, option);
+        addButtons(popup, mode);
         addButtonEvents(popup.children, area, myDiv, values);
     }
 
     /**
-     * Changes the color of the selected area and the value of the corresponding input when option=1
+     * Changes the color of the selected area and the value of the corresponding input when mode=1
      * @param {HTMLElement} myDiv  dic which contains the ADC
      * @param {RaphaelPaper} area   Selected area
      * @param {Array} values Array of the values for the inputs
      */
-    function like(event, area, values, myDiv) {
+    function select(event, area, values, myDiv) {
         var index = area.data("name").substr(1);
         if (document.querySelectorAll(".show").length==0){
             if (area.data("color") == "none") {
@@ -271,7 +303,7 @@
 					opacity: 0.5
                 });
                 area.data("color", "green");
-                myDiv.getElementsByTagName("input")[index].value = (values[0]);
+                myDiv.getElementsByTagName("input")[index].value = values[0];
             } else {
                 area.node.setAttribute("class", "neutralArea");
                 area.attr({
@@ -291,22 +323,26 @@
     }
 
      /**
-     * Changes the color of the selected area and the value of the corresponding input when option=-1
+     * Changes the color of the selected area and the value of the corresponding input when mode=2
      * @param {HTMLElement} myDiv  div which contains the ADC
      * @param {RaphaelPaper} area   Selected area
+     * @param {ImageHotspot} ihs ImageHotspot object
      * @param {Array} values Array of the values for the inputs
      */
-    function dislike(event, area, values, myDiv) {
+    function rank(event, area, ihs, myDiv) {
+		if(area.type == 'text') {
+			area = area.data('path');
+		}
         var index = area.data("name").substr(1);
         if (document.querySelectorAll(".show").length==0){
             if (area.data("color") == "none") {
 				area.node.setAttribute("class", "colored");
                 area.attr({
-					fill: dislikeColor,
+					fill: likeColor,
                     opacity: 0.5
                 });
-                area.data("color", "red");
-                myDiv.getElementsByTagName("input")[index].value = (values[0]);
+                area.data("color", "green");
+                ihs.ranking.AddOrUpdate(area.data("name"),(new Date).getTime(),myDiv.getElementsByTagName("input")[index]);
             } else {
 				area.node.setAttribute("class", "neutralArea");
                 area.attr({
@@ -314,34 +350,44 @@
                     opacity: opacity
                 });
                 area.data("color", "none");
-                myDiv.getElementsByTagName("input")[index].value = "";
+                ihs.ranking.Remove(area.data("name"));
             }
-            if (window.askia && 
+			var inps = myDiv.getElementsByTagName("input");
+			for (var i=0; i<inps.length;i++) {
+				inps[i].value = "";
+			}
+            ihs.ranking.GetByRankRange(1, -1, false).forEach(function(el, idx) {el.value.value = ihs.values[idx]});
+			ihs.renderareas.forEach(function(el) {el.data('label').attr('text',ihs.values.indexOf(inps[el.data("name").substr(1)].value)+1>0?ihs.values.indexOf(inps[el.data("name").substr(1)].value)+1:' ')});
+			if (window.askia && 
                 window.arrLiveRoutingShortcut && 
                 window.arrLiveRoutingShortcut.length > 0 &&
                 window.arrLiveRoutingShortcut.indexOf(currentQuestion) >= 0) {
                 askia.triggerAnswer();
             }
         }
-        
     }
 
     /**
      * Initializes the color of areas according to the values of inputs
      * @param {RaphaelPaper} areas  Selected area
      * @param {Array} inputs Array of the inputs in the ADC
-     * @param {Array} values Array of the values for the inputs
+     * @param {ImageHotspot} ihs ImageHotspot object
      * @param {Set}    set    Set which contains all the areas
      */
-    function init(areas, inputs, values, set) {
+    function init(areas, inputs, ihs, set) {
         for (var i = 0; i < inputs.length; i++) {
-            if (inputs[i].value == values[0] && ((numResponses > 1) || ((numResponses == 1) && likeOpt == 1))) {
+			var rank = ihs.values.indexOf(inputs[i].value) + 1;
+			if (mode == 2 && rank > 0) {
+				ihs.ranking.AddOrUpdate(areas[i].data("name"),rank,inputs[i]);
+				areas[i].data('label').attr('text',rank);
+			}
+            if (inputs[i].value == ihs.values[0].toString() || (mode == 2 && inputs[i].value != "")) {
                 areas[i].attr({
                     fill: likeColor,
                     opacity: 0.5
                 });
                 areas[i].data("color", "green");
-            } else if (inputs[i].value == values[1] && numResponses == 3) {
+            } else if (inputs[i].value == ihs.values[1].toString() && ihs.values.length > 2) {
                 areas[i].attr({
                     fill: neutralColor,
                     opacity: 0.5
@@ -355,6 +401,7 @@
                 areas[i].data("color", "red");
             }
             set.push(areas[i]);
+            set.push(areas[i].data('label'));
         }
     }
     
@@ -367,21 +414,19 @@
         this.adcContainer = parameters.adcContainer;
         this.adcID = parameters.adcID;
         this.areas = parameters.areas;
-        this.option = parameters.option;
         this.values = parameters.values;
         this.imageWidth = parseFloat(parameters.imageWidth);
         this.imageHeight = parseFloat(parameters.imageHeight);
+        this.ranking = new SortedSet;
         
         hoverCol = parameters.hoverColor;
         likeColor = parameters.likeColor;
         neutralColor = parameters.neutralColor;
         dislikeColor = parameters.dislikeColor;
-        numResponses = parameters.numResponses;
-        likeOpt = parameters.likeOpt;
+        mode = this.mode = parameters.mode;
         currentQuestion = parameters.currentQuestion;
-        showAreas = parameters.showAreas;
         areasColor = parameters.areasColor;
-        opacity = (showAreas === '1') ? 0.1 : 0;
+        opacity = parameters.showAreas ? parameters.areasOpacity : 0;
 
         var myDiv = document.getElementById(this.adcID);
         myDiv.style.maxWidth = this.imageWidth + "px";
@@ -399,16 +444,18 @@
         var areas = [];
         
         for (var i = 0; i < this.areas.length; i++) {
-            areas.push(paper.path(this.areas[i].paath).attr({
+            areas.push(paper.path(this.areas[i].path).attr({
                 'stroke-width': '0',
                 opacity: opacity,
                 fill: areasColor,
             }).data("color", "none").data("name", this.areas[i].name));
 			areas[i].node.setAttribute("class", "neutralArea");
-            createPopup(myDiv, this.option, areas[i], this.values);
+            areas[i].data("label", labelPath(areas[i]," ").data('path',areas[i]));
+            createPopup(myDiv, this.mode, areas[i], this.values);
         }
         
-        init(areas, myDiv.getElementsByTagName("input"), this.values, set);
+        init(areas, myDiv.getElementsByTagName("input"), this, set);
+        this.renderareas = areas;
         
         var isTouch =  !!("ontouchstart" in window) || window.navigator.msMaxTouchPoints > 0;
 
@@ -417,17 +464,18 @@
             set.hover(hoverIn, hoverOut);
         }
 
-        if (this.option >= 2) {
+        if (this.mode >= 3) {
             set.click(function (event) {
-                displayPopup(event, parameters.option, myDiv, this);
+                displayPopup(event, myDiv, this);
             });
-        } else if (this.option == 1) {
+        } else if (this.mode == 2) {
+            var that = this;
             set.click(function (event) {
-                like(event, this, parameters.values, myDiv);
+                rank(event, this, that, myDiv);
             });
-        } else if (this.option == -1) {
+        } else if (this.mode == 1) {
             set.click(function (event) {
-                dislike(event, this, parameters.values, myDiv);
+                select(event, this, parameters.values, myDiv);
             });
         }
         
