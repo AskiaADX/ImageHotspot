@@ -387,7 +387,7 @@
                     opacity: 0.5
                 });
                 areas[i].data("color", "green");
-            } else if (inputs[i].value == ihs.values[1].toString() && ihs.values.length > 2) {
+            } else if (ihs.values.length > 2 && inputs[i].value == ihs.values[1].toString()) {
                 areas[i].attr({
                     fill: neutralColor,
                     opacity: 0.5
