@@ -1,4 +1,4 @@
-{% Dim pathImg = CurrentADC.PropValue("imageURL") %}
+{% Dim pathImg = CurrentADC.Var("imageURL") %}
 <div id="adc_{%= CurrentADC.InstanceId %}" class="adc-default adc-imageHotspot">
     <img id="imgADC_{%= CurrentADC.InstanceId %}" src="{%= pathImg %}" alt="{%= pathImg%}"/>
     <div id="adc-container{%= CurrentADC.InstanceId %}" class="container"></div>
